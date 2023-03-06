@@ -1,81 +1,327 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-	<title>Mi sitio web</title>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Website</title>
+  <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+ <!-- Bootstrap CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+
+<!-- Bootstrap JavaScript -->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+  <!-- Materialize CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="index.css">
 </head>
 <body>
-	<header>
-		<h1>Mi sitio web</h1>
-		<nav>
-			<ul>
-				<li><a href="#html">HTML</a></li>
-				<li><a href="#css">CSS</a></li>
-				<li><a href="#js">JavaScript</a></li>
-				<li><a href="#python">Python</a></li>
-				<li><a href="#php">PHP</a></li>
-			</ul>
-		</nav>
-	</header>
-	
-	<main>
-		<section id="html">
-			<h2>HTML</h2>
-			<p>El lenguaje de marcado de hipertexto (HTML) se utiliza para crear páginas web. HTML utiliza etiquetas para definir la estructura y el contenido de una página web.</p>
-			<p>A continuación se muestran algunos ejemplos de páginas web creadas con HTML:</p>
-			<ul>
-				<li><a href="https://www.w3schools.com/html/default.asp">W3Schools - HTML Tutorial</a></li>
-				<li><a href="https://www.apple.com/">Apple</a></li>
-				<li><a href="https://www.nytimes.com/">The New York Times</a></li>
-			</ul>
-		</section>
-		
-		<section id="css">
-			<h2>CSS</h2>
-			<p>Las hojas de estilo en cascada (CSS) se utilizan para dar estilo y diseño a las páginas web creadas con HTML. CSS permite definir el color, la fuente, el tamaño y la posición de los elementos en una página web.</p>
-			<p>A continuación se muestran algunos ejemplos de páginas web creadas con CSS:</p>
-			<ul>
-				<li><a href="https://www.w3schools.com/css/default.asp">W3Schools - CSS Tutorial</a></li>
-				<li><a href="https://www.google.com/">Google</a></li>
-				<li><a href="https://www.amazon.com/">Amazon</a></li>
-			</ul>
-		</section>
-		
-		<section id="js">
-			<h2>JavaScript</h2>
-			<p>JavaScript se utiliza para crear interactividad en las páginas web. JavaScript permite agregar efectos, validar formularios, crear animaciones y mucho más.</p>
-			<p>A continuación se muestran algunos ejemplos de páginas web creadas con JavaScript:</p>
-			<ul>
-				<li><a href="https://www.w3schools.com/js/default.asp">W3Schools - JavaScript Tutorial</a></li>
-				<li><a href="https://www.facebook.com/">Facebook</a></li>
-				<li><a href="https://www.airbnb.com/">Airbnb</a>
-        <section id="python">
-		    <h2>Python</h2>
-		    <p>Python es un lenguaje de programación de alto nivel utilizado en una variedad de aplicaciones, desde ciencia de datos hasta desarrollo web. Python se destaca por su legibilidad y su capacidad para ser utilizado en una amplia variedad de tareas.</p>
-		    <p>A continuación se muestran algunos ejemplos de aplicaciones web creadas con Python:</p>
-		    <ul>
-			    <li><a href="https://www.djangoproject.com/">Django</a></li>
-			    <li><a href="https://flask.palletsprojects.com/en/2.1.x/">Flask</a></li>
-			    <li><a href="https://www.odoo.com/es_ES/">Odoo</a></li>
-		    </ul>
-	    </section>
-	
-	    <section id="php">
-		    <h2>PHP</h2>
-		    <p>PHP es un lenguaje de programación del lado del servidor utilizado en la creación de aplicaciones web. PHP se utiliza para interactuar con bases de datos y enviar contenido dinámico a los usuarios.</p>
-		    <p>A continuación se muestran algunos ejemplos de aplicaciones web creadas con PHP:</p>
-		    <ul>
-			    <li><a href="https://www.php.net/">Sitio oficial de PHP</a></li>
-			    <li><a href="https://www.wordpress.com/">WordPress</a></li>
-			    <li><a href="https://www.moodle.org/">Moodle</a></li>
-		    </ul>
-	    </section>
-</main>
 
-<footer>
-	<p>Derechos reservados &copy; shopstore 2023</p>
-</footer>
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+  <a class="navbar-brand" href="#">ShopStore</a>
+  <button class="navbar-toggler" type="button" id="menu-toggle">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse " id="navbarNav">
+    <ul class="navbar-nav ml-auto">
+      <li class="nav-item">
+        <a class="nav-link" href="#home">Home</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#about">About</a>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Sections
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="#projects">Projects</a>
+          <a class="dropdown-item" href="#skills">Skills</a>
+          <a class="dropdown-item" href="#contact">Contact</a>
+          <a class="dropdown-item" href="#news">News</a>
+          <a class="dropdown-item" href="#gallery">Gallery</a>
+          <a class="dropdown-item" href="#music">Music</a>
+        </div>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+
+
+  <!-- Home Section -->
+  <section id="home" class="section">
+    <div class="container">
+      <h1>Welcome to my website!</h1>
+      <p>This is where you'll find all my latest projects, skills, and updates.</p>
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section id="about" class="section">
+    <div class="container">
+      <h2>About Me</h2>
+      <p>My name is John Doe and I'm a web developer based in New York City.</p>
+      <p>I specialize in creating responsive, user-friendly websites and web applications using HTML, CSS, JavaScript, and various web frameworks and libraries like Bootstrap and Materialize.</p>
+    </div>
+  </section>
+
+  <!-- Projects Section -->
+  <section id="projects" class="section">
+    <div class="container">
+      <h2>My Projects</h2>
+      <div class="row">
+        <div class="col-md-4">
+          <div class="card">
+            <div class="card-image">
+              <img src="project-1.jpg" alt="Project 1">
+              <span class="card-title">Project 1</span>
+            </div>
+            <div class="card-content">
+              <p>This is a description of Project 1.</p>
+            </div>
+            <div class="card-action">
+              <a href="#">Learn More</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card">
+            <div class="card-image">
+              <img src="project-2.jpg" alt="Project 2">
+              <span class="card-title">Project 2</span>
+            </div>
+            <div class="card-content">
+              <p>This is a description of Project 2.</p>
+            </div>
+            <div class="card-action">
+              <a href="#">Learn More</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card">
+            <div class="card-image">
+              <img src="project-3.jpg" alt="Project 3">
+              <span class="card-title">Project 3</span>
+            </div>
+            <div class="card-content">
+              <p>This is a description of Project 3.</p>
+            </div>
+            <div class="card-action">
+              <a href="#">Learn More</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Skills Section -->
+    <section id="skills" class="section">
+      <div class="container">
+        <h2>My Skills</h2>
+        <ul>
+          <li>HTML</li>
+          <li>CSS</li>
+          <li>JavaScript</li>
+          <li>Bootstrap</li>
+          <li>Materialize</li>
+          <li>React</li>
+          <li>Node.js</li>
+          <li>Express</li>
+        </ul>
+      </div>
+    </section>
+    <!-- Contact Section -->
+    <section id="contact" class="section">
+      <div class="container">
+        <h2>Contact Me</h2>
+        <form action="#" method="post">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" class="form-control" id="name" name="name" required>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" class="form-control" id="email" name="email" required>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="message">Message</label>
+            <textarea class="form-control" id="message" name="message" rows="5" required></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary">Send</button>
+        </form>
+      </div>
+    </section>
+    <!-- News Section -->
+    <section id="news" class="section">
+      <div class="container">
+        <h2>ShopScope</h2>
+        <div class="row">
+          <div class="col-md-4">
+            <div class="card">
+              <div
+              class="card-image">
+          <img src="blog-post-1.jpg" alt="Blog Post 1">
+        </div>
+        <div class="card-content">
+          <span class="card-title">Blog Post 1</span>
+          <p>This is a short summary of Blog Post 1.</p>
+        </div>
+        <div class="card-action">
+          <a href="#">Read More</a>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card">
+        <div class="card-image">
+          <img src="blog-post-2.jpg" alt="Blog Post 2">
+        </div>
+        <div class="card-content">
+          <span class="card-title">Blog Post 2</span>
+          <p>This is a short summary of Blog Post 2.</p>
+        </div>
+        <div class="card-action">
+          <a href="#">Read More</a>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card">
+        <div class="card-image">
+          <img src="blog-post-3.jpg" alt="Blog Post 3">
+        </div>
+        <div class="card-content">
+          <span class="card-title">Blog Post 3</span>
+          <p>This is a short summary of Blog Post 3.</p>
+        </div>
+        <div class="card-action">
+          <a href="#">Read More</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+<!-- Gallery Section -->
+<section id="gallery" class="section">
+  <div class="container">
+    <h2>My Gallery</h2>
+    <div class="row">
+      <div class="col-md-4">
+        <img src="gallery-1.jpg" alt="Gallery 1">
+      </div>
+      <div class="col-md-4">
+        <img src="gallery-2.jpg" alt="Gallery 2">
+      </div>
+      <div class="col-md-4">
+        <img src="gallery-3.jpg" alt="Gallery 3">
+      </div>
+      <div class="col-md-4">
+        <img src="gallery-4.jpg" alt="Gallery 4">
+      </div>
+      <div class="col-md-4">
+        <img src="gallery-5.jpg" alt="Gallery 5">
+      </div>
+      <div class="col-md-4">
+        <img src="gallery-6.jpg" alt="Gallery 6">
+      </div>
+    </div>
+  </div>
+</section>
+<!-- Music Section -->
+<section id="music" class="section">
+  <div class="container">
+    <h2>My Music</h2>
+    <div class="row">
+      <div class="col-md-6">
+        <iframe src="https://open.spotify.com/embed/album/3vY9XcE8ccffDQ2aSpR1Hv" width="100%" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+      </div>
+      <div class="col-md-6">
+        <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" width="100%" height="380" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </div>
+    </div>
+  </section>
+  <!-- Contact Section -->
+  <section id="contact" class="section">
+    <div class="container">
+      <h2>Contact Me</h2>
+      <form>
+        <div class="row">
+          <div class="input-field col-md-6">
+            <input type="text" id="name" name="name" required>
+            <label for="name">Name</label>
+          </div>
+          <div class="input-field col-md-6">
+            <input type="email" id="email" name="email" required>
+            <label for="email">Email</label>
+          </div>
+          <div class="input-field col-md-12">
+            <input type="text" id="subject" name="subject" required>
+            <label for="subject">Subject</label>
+          </div>
+          <div class="input-field col-md-12">
+            <textarea id="message" name="message" class="materialize-textarea" required></textarea>
+            <label for="message">Message</label>
+          </div>
+          <div class="input-field col-md-12">
+            <button class="btn waves-effect waves-light" type="submit" name="action">Submit
+              <i class="material-icons right">send</i>
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </section>
+  <!-- Footer Section -->
+  <footer class="page-footer">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6">
+          <h5>About Me</h5>
+          <p>Hi, my name is John Doe and I'm a web developer based in San Francisco, CA. I specialize in creating responsive, user-friendly websites using the latest web technologies.</p>
+        </div>
+        <div class="col-md-3">
+          <h5>Links</h5>
+          <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+        </div>
+        <div class="col-md-3">
+          <h5>Connect</h5>
+          <ul>
+            <li><a href="#">Facebook</a></li>
+            <li><a href="#">Twitter</a></li>
+            <li><a href="#">Instagram</a></li>
+            <li><a href="#">LinkedIn</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </footer>
+  <script>
+    $(window).scroll(function() {
+      if ($(this).scrollTop() > 50) {
+        $('.navbar').addClass('navbar-transparent');
+      } else {
+        $('.navbar').removeClass('navbar-transparent');
+      }
+    });
+  </script>
 </body>
-</html>
+</html>      
