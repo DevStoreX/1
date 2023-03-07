@@ -93,6 +93,22 @@ h6 {
   background-color: rgba(43, 185, 74, 0.8) !important;
 }
 
+.navbar-toggler:focus {
+  outline: none;
+}
+
+.navbar-toggler-icon {
+  background-image: url('path-to-your-image');
+  background-repeat: no-repeat;
+  background-size: contain;
+  transition: all 0.3s ease-in-out;
+}
+
+.navbar-toggler:focus .navbar-toggler-icon {
+  transform: rotate(90deg);
+  background-color: rgb(17, 227, 66); /* change this to the color you want */
+}
+
 /* Hero Section Styles */
 
 #home {
