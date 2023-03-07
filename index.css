@@ -99,12 +99,12 @@ h6 {
 
 .navbar-toggler:not(.collapsed) .navbar-toggler-icon:before {
   top: 0;
-  transform: rotate(90deg);
+  transform: rotate(45deg);
 }
 
 .navbar-toggler:not(.collapsed) .navbar-toggler-icon:after {
   bottom: 0;
-  transform: rotate(-90deg);
+  transform: rotate(-45deg);
 }
 
 /* Hero Section Styles */
