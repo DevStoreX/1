@@ -98,7 +98,7 @@ h6 {
 }
 
 .navbar-toggler-icon {
-  background-image: url('path-to-your-image');
+  background-color: rgb(17, 227, 66);
   background-repeat: no-repeat;
   background-size: contain;
   transition: all 0.3s ease-in-out;
