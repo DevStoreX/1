@@ -93,20 +93,18 @@ h6 {
   background-color: rgba(43, 185, 74, 0.8) !important;
 }
 
-.navbar-toggler:focus {
-  outline: none;
+.navbar-toggler:not(.collapsed) .navbar-toggler-icon {
+  transform: rotate(45deg);
 }
 
-.navbar-toggler-icon {
-  background-color: rgb(17, 227, 66);
-  background-repeat: no-repeat;
-  background-size: contain;
-  transition: all 0.3s ease-in-out;
-}
-
-.navbar-toggler:focus .navbar-toggler-icon {
+.navbar-toggler:not(.collapsed) .navbar-toggler-icon:before {
+  top: 0;
   transform: rotate(90deg);
-  background-color: rgb(17, 227, 66); /* change this to the color you want */
+}
+
+.navbar-toggler:not(.collapsed) .navbar-toggler-icon:after {
+  bottom: 0;
+  transform: rotate(-90deg);
 }
 
 /* Hero Section Styles */
