@@ -108,6 +108,7 @@ export class ModelService {
     const rec = await this.store.getModel(id);
     const stl = await this.store.readModelFile(id, "model.stl");
     if (!rec || !stl) return { ok: false, error: `No existe el modelo ${id}` };
+    if (rec.kind === "scad") return { ok: false, error: "Los modelos OpenSCAD se escalan cambiando sus parámetros (update_model)." };
     const mesh = placeOnBed(scaleToLargestDimension(parseSTL(stl), targetSizeMm));
     const out = toBinarySTL(mesh);
     const analysis = await this.analyze(out);

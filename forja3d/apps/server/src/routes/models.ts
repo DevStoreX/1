@@ -104,6 +104,15 @@ export function modelRoutes(rt: Runtime) {
     return c.json({ model: updated, info });
   });
 
+  app.post("/models/:id/rescale", async (c) => {
+    const body = await c.req.json<{ targetSizeMm?: number }>();
+    const size = Number(body.targetSizeMm);
+    if (!(size >= 1 && size <= 2000)) return c.json({ error: "Tamaño no válido" }, 400);
+    const r = await rt.models.rescaleMesh(c.req.param("id"), size);
+    if (!r.ok) return c.json({ error: r.error }, 404);
+    return c.json({ model: r.model, estimate: r.estimate });
+  });
+
   app.post("/models/:id/estimate", async (c) => {
     const body = await c.req.json<{ printerProfile?: string; material?: string; infillPercent?: number; layerHeightMm?: number }>().catch(() => ({}));
     const res = await rt.models.reanalyze(c.req.param("id"), (body as { printerProfile?: string }).printerProfile);
