@@ -10,7 +10,7 @@ Cada modelo creado se ve en la interfaz web de Forja (viewer_url) y se descarga 
 
 ${DESIGN_GUIDELINES}`;
 
-const MODEL_TOOLS = new Set(["create_model", "update_model", "generate_organic_mesh", "get_model", "analyze_model"]);
+const MODEL_TOOLS = new Set(["create_model", "update_model", "generate_organic_mesh", "get_model", "analyze_model", "open_example"]);
 
 /**
  * Servidor MCP con las herramientas de Forja. Cualquier asistente compatible con MCP

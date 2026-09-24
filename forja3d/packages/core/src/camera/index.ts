@@ -66,13 +66,16 @@ export class VisionLLMDetector implements FailureDetector {
  */
 export class ObicoDetector implements FailureDetector {
   readonly name = "obico";
-  constructor(private mlApiUrl: string, private fetchImpl: typeof fetch = fetch) {}
+  constructor(private mlApiUrl: string, private fetchImpl: typeof fetch = fetch, private token?: string) {}
   async check(_snapshot: Snapshot, ctx: { printerName: string; snapshotUrl?: string }): Promise<CameraCheck> {
     const at = new Date().toISOString();
     if (!ctx.snapshotUrl) {
       return { at, verdict: "unknown", confidence: 0, issues: [], explanation: "Obico necesita FORJA_PUBLIC_URL para descargar la imagen.", detector: this.name };
     }
-    const res = await this.fetchImpl(`${this.mlApiUrl.replace(/\/+$/, "")}/p/?img=${encodeURIComponent(ctx.snapshotUrl)}`, { signal: AbortSignal.timeout(30_000) });
+    const res = await this.fetchImpl(`${this.mlApiUrl.replace(/\/+$/, "")}/p/?img=${encodeURIComponent(ctx.snapshotUrl)}`, {
+      signal: AbortSignal.timeout(30_000),
+      headers: this.token ? { Authorization: `Bearer ${this.token}` } : {},
+    });
     if (!res.ok) throw new Error(`Obico ml_api respondió HTTP ${res.status}`);
     const body = (await res.json()) as { detections?: [string, number, number[]][] };
     const best = Math.max(0, ...(body.detections ?? []).map((d) => d[1]));

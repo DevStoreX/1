@@ -1,0 +1,36 @@
+# Uso:  cp .env.example .env   (y rellena lo que quieras)
+#       docker compose up -d                      → Forja en http://localhost:8787
+#       docker compose --profile local-ai up -d   → además Ollama (IA gratis en tu equipo)
+services:
+  forja:
+    build: .
+    image: forja3d:latest
+    ports:
+      - "8787:8787"
+    env_file:
+      - path: .env
+        required: false
+    environment:
+      FORJA_PUBLIC_URL: ${FORJA_PUBLIC_URL:-http://localhost:8787}
+      # Así el detector Obico (en la misma red de Docker) puede descargar las capturas
+      FORJA_INTERNAL_URL: http://forja:8787
+      OLLAMA_URL: ${OLLAMA_URL:-http://ollama:11434}
+    volumes:
+      - forja-data:/data
+    restart: unless-stopped
+
+  ollama:
+    image: ollama/ollama:latest
+    profiles: ["local-ai"]
+    volumes:
+      - ollama:/root/.ollama
+    restart: unless-stopped
+    # Con GPU NVIDIA, descomenta:
+    # deploy:
+    #   resources:
+    #     reservations:
+    #       devices: [{ driver: nvidia, count: all, capabilities: [gpu] }]
+
+volumes:
+  forja-data:
+  ollama:

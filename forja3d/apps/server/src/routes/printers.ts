@@ -109,7 +109,7 @@ export function printerRoutes(rt: Runtime) {
       const ctx = await rt.toolContext();
       const detector = createDetector(ctx.settings, ctx.vision!);
       const status = await p.conn.status().catch(() => undefined);
-      const check = await detector.check(snap, { printerName: p.cfg.name, status, snapshotUrl: rt.publicUrl ? `${rt.publicUrl}/api/printers/${p.cfg.id}/snapshot` : undefined });
+      const check = await detector.check(snap, { printerName: p.cfg.name, status, snapshotUrl: rt.snapshotUrlFor(p.cfg.id) });
       return c.json(check);
     } catch (e) {
       return c.json({ error: (e as Error).message }, 502);
@@ -133,7 +133,7 @@ export function printerRoutes(rt: Runtime) {
         connector: () => rt.printers.get(p.cfg),
         detector: () => createDetector(ctx.settings, ctx.vision!),
         printerName: p.cfg.name,
-        snapshotUrl: rt.publicUrl ? `${rt.publicUrl}/api/printers/${p.cfg.id}/snapshot` : undefined,
+        snapshotUrl: rt.snapshotUrlFor(p.cfg.id),
       },
       { intervalSec: body.intervalSec, autoPause: body.autoPause },
     );

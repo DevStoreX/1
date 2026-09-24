@@ -16,6 +16,8 @@ import {
 export interface RuntimeOptions {
   dataDir?: string;
   publicUrl?: string;
+  /** URL con la que otros servicios (p. ej. Obico en Docker) alcanzan este servidor */
+  internalUrl?: string;
   env?: NodeJS.ProcessEnv;
 }
 
@@ -36,12 +38,14 @@ export class Runtime {
   readonly monitor = new CameraMonitor();
   readonly events = new EventEmitter();
   readonly publicUrl?: string;
+  readonly internalUrl?: string;
   private envSettings: Partial<ForjaSettings>;
 
   constructor(opts: RuntimeOptions = {}) {
     const env = opts.env ?? process.env;
     this.store = new Store(opts.dataDir ?? defaultDataDir(env));
     this.publicUrl = opts.publicUrl ?? env.FORJA_PUBLIC_URL;
+    this.internalUrl = opts.internalUrl ?? env.FORJA_INTERNAL_URL ?? this.publicUrl;
     this.envSettings = settingsFromEnv(env);
     this.models = new ModelService(this.store, () => this.settings());
     this.events.setMaxListeners(100);
@@ -68,6 +72,13 @@ export class Runtime {
     return this.settings();
   }
 
+  /** URL de la captura para servicios de la red interna (incluye el token si hay) */
+  snapshotUrlFor = (printerId: string): string | undefined => {
+    if (!this.internalUrl) return undefined;
+    const token = process.env.FORJA_TOKEN;
+    return `${this.internalUrl}/api/printers/${printerId}/snapshot${token ? `?token=${encodeURIComponent(token)}` : ""}`;
+  };
+
   recordUsage = (entry: Omit<UsageEntry, "at">) => this.store.addUsage(entry);
 
   async toolContext(opts: { conversationId?: string; attachments?: ImagePart[]; onModel?: (m: ModelRecord) => void } = {}): Promise<ToolContext> {
@@ -80,6 +91,7 @@ export class Runtime {
       settings,
       vision: createVisionFn(settings, (costUsd, model) => void this.recordUsage({ kind: "vision", provider: settings.visionProvider, model, costUsd })),
       publicUrl: this.publicUrl,
+      snapshotUrlFor: this.snapshotUrlFor,
       attachments: opts.attachments ?? [],
       conversationId: opts.conversationId,
       recordUsage: this.recordUsage,

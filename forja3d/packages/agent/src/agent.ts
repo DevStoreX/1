@@ -33,7 +33,7 @@ export interface RunAgentResult {
 }
 
 const MAX_TOOL_OUTPUT = 30_000;
-const MODEL_TOOLS = new Set(["create_model", "update_model", "generate_organic_mesh"]);
+const MODEL_TOOLS = new Set(["create_model", "update_model", "generate_organic_mesh", "open_example"]);
 
 async function runTool(tool: ForjaTool | undefined, name: string, input: unknown, ctx: ToolContext): Promise<ToolOutput> {
   if (!tool) return { content: `La herramienta ${name} no existe.`, isError: true };

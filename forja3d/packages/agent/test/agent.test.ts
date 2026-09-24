@@ -77,6 +77,18 @@ describe("herramientas", () => {
   });
 });
 
+describe("ejemplos", () => {
+  it("lista y abre un ejemplo probado", async () => {
+    const { openExampleTool } = await import("../src/tools/index.ts");
+    const list = JSON.parse((await openExampleTool.run({}, ctx)).content);
+    expect(list.map((e: { name: string }) => e.name)).toContain("soporte-celular.scad");
+    const opened = await openExampleTool.run({ name: "soporte" }, ctx);
+    expect(opened.isError).toBeFalsy();
+    expect(JSON.parse(opened.content).needs_supports).toBe(false);
+    expect((await openExampleTool.run({ name: "no-existe" }, ctx)).isError).toBe(true);
+  });
+});
+
 describe("bucle del agente", () => {
   it("crea un modelo con la herramienta, lo modifica y responde", async () => {
     const events: AgentEvent[] = [];

@@ -11,6 +11,9 @@ import {
   type Gen3DProviderId,
   type PrinterConfig,
 } from "@forja3d/core";
+import { readFile, readdir } from "node:fs/promises";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
 import { z } from "zod";
 import { summarizeModel } from "../models.ts";
 import { createDetector } from "../vision.ts";
@@ -323,7 +326,7 @@ export const checkCameraTool = tool({
     if (!ctx.vision) return fail("No hay modelo de visión configurado");
     const detector = createDetector(ctx.settings, ctx.vision);
     const status = await c.status().catch(() => undefined);
-    const check = await detector.check(snap, { printerName: cfg.name, status, snapshotUrl: ctx.publicUrl ? `${ctx.publicUrl}/api/printers/${cfg.id}/snapshot` : undefined });
+    const check = await detector.check(snap, { printerName: cfg.name, status, snapshotUrl: ctx.snapshotUrlFor?.(cfg.id) });
     return ok({ ...check, status }, [{ type: "image", mime: snap.mime, data: Buffer.from(snap.data).toString("base64") }]);
   },
 });
@@ -354,7 +357,7 @@ export const cameraMonitorTool = tool({
         connector: () => ctx.printers.get(cfg),
         detector: () => createDetector(settings, vision),
         printerName: cfg.name,
-        snapshotUrl: ctx.publicUrl ? `${ctx.publicUrl}/api/printers/${cfg.id}/snapshot` : undefined,
+        snapshotUrl: ctx.snapshotUrlFor?.(cfg.id),
       },
       { intervalSec: input.interval_sec, autoPause: input.auto_pause },
     );
@@ -373,6 +376,38 @@ export const referenceTool = tool({
   },
 });
 
+const EXAMPLES_DIR = process.env.FORJA_EXAMPLES_DIR ?? path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../../../../examples");
+
+export const openExampleTool = tool({
+  name: "open_example",
+  description:
+    "Lista o abre diseños OpenSCAD de ejemplo ya probados (se imprimen sin soportes). Úsalos como punto de partida o referencia de estilo. Sin 'name' devuelve la lista.",
+  schema: z.object({ name: z.string().optional().describe("Nombre del archivo, p. ej. soporte-celular.scad") }),
+  async run(input, ctx) {
+    let files: string[];
+    try {
+      files = (await readdir(EXAMPLES_DIR)).filter((f) => f.endsWith(".scad")).sort();
+    } catch {
+      return fail("No se encontró la carpeta de ejemplos.");
+    }
+    if (!input.name) {
+      const list = await Promise.all(
+        files.map(async (f) => ({ name: f, summary: (await readFile(path.join(EXAMPLES_DIR, f), "utf8")).split("\n")[0].replace(/^\/\/\s*/, "") })),
+      );
+      return ok(list);
+    }
+    const wanted = input.name.toLowerCase().replace(/\.scad$/, "");
+    const file = files.find((f) => f.toLowerCase().replace(/\.scad$/, "") === wanted) ?? files.find((f) => f.toLowerCase().includes(wanted));
+    if (!file) return fail(`No existe el ejemplo "${input.name}". Disponibles: ${files.join(", ")}`);
+    const source = await readFile(path.join(EXAMPLES_DIR, file), "utf8");
+    const title = file.replace(/\.scad$/, "").replace(/-/g, " ");
+    const r = await ctx.models.createFromScad({ name: title.charAt(0).toUpperCase() + title.slice(1), source, origin: "example" });
+    if (!r.ok) return fail(r.error ?? "No se pudo compilar el ejemplo");
+    ctx.onModel?.(r.model!);
+    return ok(summarizeModel(r.model!, r.estimate));
+  },
+});
+
 export const ALL_TOOLS: ForjaTool[] = [
   createModelTool,
   updateModelTool,
@@ -388,6 +423,7 @@ export const ALL_TOOLS: ForjaTool[] = [
   checkCameraTool,
   cameraMonitorTool,
   referenceTool,
+  openExampleTool,
 ] as ForjaTool[];
 
 /** Esquema JSON de la herramienta (sin la clave $schema, que la API no necesita). */

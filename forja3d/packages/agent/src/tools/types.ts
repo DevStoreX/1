@@ -11,8 +11,10 @@ export interface ToolContext {
   monitor: CameraMonitor;
   settings: ForjaSettings;
   vision?: VisionFn;
-  /** URL pública del servidor (para que Obico descargue capturas) */
+  /** URL pública del servidor */
   publicUrl?: string;
+  /** URL de la captura de cámara accesible por servicios externos (Obico) */
+  snapshotUrlFor?: (printerId: string) => string | undefined;
   /** Imágenes adjuntadas por la persona en esta conversación (la más reciente primero) */
   attachments: ImagePart[];
   onModel?: (model: ModelRecord) => void;

@@ -26,6 +26,6 @@ export function createVisionFn(settings: ForjaSettings, onCost?: (costUsd: numbe
 }
 
 export function createDetector(settings: ForjaSettings, vision: VisionFn): FailureDetector {
-  if (settings.cameraDetector === "obico" && settings.obicoUrl) return new ObicoDetector(settings.obicoUrl);
+  if (settings.cameraDetector === "obico" && settings.obicoUrl) return new ObicoDetector(settings.obicoUrl, fetch, process.env.OBICO_ML_TOKEN);
   return new VisionLLMDetector(vision);
 }
