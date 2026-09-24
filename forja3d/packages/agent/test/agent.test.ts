@@ -262,3 +262,13 @@ describe("proveedor compatible (Ollama, LM Studio...)", () => {
     expect(msgs.map((m) => m.role)).toEqual(["system", "user", "assistant", "tool"]);
   });
 });
+
+describe("errores de conexión", () => {
+  it("explica que Ollama no está en marcha", async () => {
+    const fetchImpl = (async () => {
+      throw new TypeError("fetch failed");
+    }) as unknown as typeof fetch;
+    const p = new OpenAICompatibleProvider({ id: "ollama", baseUrl: "http://localhost:11434/v1", model: "qwen3:8b", fetchImpl });
+    await expect(p.chat({ system: "", messages: [{ role: "user", content: [{ type: "text", text: "hola" }] }], tools: [] })).rejects.toThrow(/ollama serve/);
+  });
+});

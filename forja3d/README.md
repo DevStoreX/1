@@ -28,7 +28,7 @@ Todo con código abierto. Solo pagas el costo real de la IA, o nada si usas un m
 
 | | |
 |---|---|
-| 🧠 **Agente conversacional** | Explica cómo funciona un invento (también desde una foto), busca si ya existe, propone mejoras y lo diseña. Habla español e inglés. |
+| 🧠 **Agente conversacional** | Explica cómo funciona un invento (también desde una foto), busca si ya existe, propone mejoras y lo diseña. Responde en tu idioma (interfaz en español, con traducción parcial al inglés). |
 | 📐 **CAD paramétrico real** | El agente escribe OpenSCAD y Forja lo compila con el motor **Manifold** (WebAssembly, en menos de un segundo). Cada medida importante se vuelve un **control deslizante**. |
 | ✅ **¿Se puede imprimir?** | Comprueba que la malla sea cerrada, detecta voladizos que necesitan soportes, revisa la base de apoyo y si cabe en tu impresora. El agente corrige el diseño solo. |
 | 💰 **Precio justo** | Gramos, tiempo y costo real: material, luz, desgaste, trabajo y fallos. Sugiere precios de venta con comisiones e impuestos. |
@@ -162,4 +162,4 @@ Consulta [LICENSE](LICENSE) para los componentes de terceros.
 
 ---
 
-<sub>Built for makers everywhere · Forja3D is an open-source AI agent for 3D printing: parametric CAD from chat or photos, printability checks, fair pricing, printer control (Bambu, Prusa, Klipper, OctoPrint), AI failure detection and an MCP server. English UI included.</sub>
+<sub>Built for makers everywhere · Forja3D is an open-source AI agent for 3D printing: parametric CAD from chat or photos, printability checks, fair pricing, printer control (Bambu, Prusa, Klipper, OctoPrint), AI failure detection and an MCP server. Spanish-first UI with a (partial) English translation; the agent replies in your language.</sub>

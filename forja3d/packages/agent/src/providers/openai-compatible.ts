@@ -83,12 +83,19 @@ export class OpenAICompatibleProvider implements LLMProvider {
       stream_options: { include_usage: true },
       max_tokens: req.maxTokens ?? 8192,
     };
-    const res = await f(`${this.opts.baseUrl.replace(/\/+$/, "")}/chat/completions`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json", ...(this.opts.apiKey ? { Authorization: `Bearer ${this.opts.apiKey}` } : {}) },
-      body: JSON.stringify(body),
-      signal: req.signal,
-    });
+    const url = `${this.opts.baseUrl.replace(/\/+$/, "")}/chat/completions`;
+    let res: Response;
+    try {
+      res = await f(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", ...(this.opts.apiKey ? { Authorization: `Bearer ${this.opts.apiKey}` } : {}) },
+        body: JSON.stringify(body),
+        signal: req.signal,
+      });
+    } catch (e) {
+      if ((e as Error).name === "AbortError") throw e;
+      throw new Error(`No se pudo conectar con ${this.opts.baseUrl} (${(e as Error).message}). ¿Está en marcha${this.id === "ollama" ? " Ollama (ollama serve)" : " el servidor"}?`);
+    }
     if (!res.ok || !res.body) {
       throw new Error(`${this.id} respondió HTTP ${res.status}: ${(await res.text().catch(() => "")).slice(0, 400)}`);
     }
