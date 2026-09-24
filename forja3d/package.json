@@ -1,0 +1,33 @@
+{
+  "name": "forja3d",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Forja3D: agente de IA abierto y justo para impresión 3D — de la idea a la pieza impresa.",
+  "type": "module",
+  "license": "MIT",
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "engines": {
+    "node": ">=20.11"
+  },
+  "scripts": {
+    "dev": "concurrently -k -n server,web -c blue,magenta \"npm:dev:server\" \"npm:dev:web\"",
+    "dev:server": "npm run dev -w @forja3d/server",
+    "dev:web": "npm run dev -w @forja3d/web",
+    "build": "npm run build -w @forja3d/web",
+    "start": "npm run start -w @forja3d/server",
+    "mcp": "npm run start -w @forja3d/mcp",
+    "typecheck": "tsc -p tsconfig.json --noEmit && npm run typecheck -w @forja3d/web",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.2",
+    "concurrently": "^10.0.5",
+    "tsx": "^4.23.15",
+    "typescript": "^7.0.2",
+    "vitest": "^5.0.1"
+  }
+}

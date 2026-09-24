@@ -1,0 +1,20 @@
+{
+  "name": "@forja3d/mcp",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "license": "MIT",
+  "bin": {
+    "forja3d-mcp": "./bin/forja3d-mcp.mjs"
+  },
+  "scripts": {
+    "start": "tsx src/index.ts"
+  },
+  "dependencies": {
+    "@forja3d/agent": "0.1.0",
+    "@forja3d/core": "0.1.0",
+    "@modelcontextprotocol/sdk": "^1.30.1",
+    "tsx": "^4.23.15",
+    "zod": "^4.6.5"
+  }
+}
