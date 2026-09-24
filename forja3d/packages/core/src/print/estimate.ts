@@ -40,7 +40,8 @@ export function estimatePrint(
     topBottomLayers: 4,
     supports: "auto",
     filamentDiameterMm: 1.75,
-    ...opts.settings,
+    // Ignoramos los valores undefined para no pisar los valores por defecto
+    ...Object.fromEntries(Object.entries(opts.settings ?? {}).filter(([, v]) => v !== undefined && v !== null)),
   };
   const lineWidth = s.nozzleMm * 1.125;
   const wallThickness = s.wallLoops * lineWidth; // mm

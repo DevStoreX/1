@@ -198,6 +198,7 @@ export const generateMeshTool = tool({
     name: z.string(),
     prompt: z.string().optional().describe("Descripción visual del objeto, en inglés, si no hay imagen"),
     use_attached_image: z.boolean().optional().describe("Usar la imagen más reciente que adjuntó la persona"),
+    image_url: z.string().optional().describe("URL pública (https) o data URL de una imagen, alternativa a use_attached_image"),
     provider: z.enum(["fal-trellis", "fal-hunyuan3d", "hunyuan3d-local"]).optional(),
     target_height_mm: z.number().min(5).max(400).optional().describe("Tamaño final del lado mayor en mm (por defecto 60)"),
   }),
@@ -206,10 +207,12 @@ export const generateMeshTool = tool({
     const provider: Gen3DProviderId = input.provider ?? (s.hunyuanUrl ? "hunyuan3d-local" : "fal-trellis");
     const att = input.use_attached_image ? ctx.attachments[0] : undefined;
     if (input.use_attached_image && !att) return fail("No hay ninguna imagen adjunta en la conversación.");
-    if (!att && !input.prompt) return fail("Necesito una imagen adjunta o un prompt.");
+    const image = att ? `data:${att.mime};base64,${att.data}` : input.image_url;
+    if (image && !/^(https:\/\/|data:image\/)/.test(image)) return fail("image_url debe ser https:// o data:image/…");
+    if (!image && !input.prompt) return fail("Necesito una imagen o un prompt.");
     try {
       const r = await generate3D(
-        { provider, image: att ? `data:${att.mime};base64,${att.data}` : undefined, prompt: input.prompt },
+        { provider, image, prompt: input.prompt },
         { falKey: s.falKey, hunyuanUrl: s.hunyuanUrl },
       );
       await ctx.recordUsage?.({ kind: "gen3d", provider, costUsd: r.costUsd, conversationId: ctx.conversationId, note: input.name });

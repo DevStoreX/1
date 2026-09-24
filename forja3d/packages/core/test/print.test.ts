@@ -16,6 +16,13 @@ describe("estimación de impresión", () => {
     expect(e.supportGrams).toBe(0);
   });
 
+  it("ignora ajustes undefined", () => {
+    const a = analyzeMesh(scaleMesh(cube(1), 20));
+    const e = estimatePrint(a, { settings: { infillPercent: undefined, layerHeightMm: undefined } });
+    expect(e.grams).toBeGreaterThan(0);
+    expect(e.settings.layerHeightMm).toBe(0.2);
+  });
+
   it("más relleno implica más material", () => {
     const a = analyzeMesh(scaleMesh(cube(1), 40));
     const low = estimatePrint(a, { settings: { infillPercent: 10 } });
